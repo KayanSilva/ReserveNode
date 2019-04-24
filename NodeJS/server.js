@@ -1,9 +1,8 @@
-import { createServer } from 'http';
+import { createServer } from 'http'
 
 const servidor = createServer(function (req, resp) {
-
-    let html = '';
-    if (req.url == '/') {
+    var html = ''
+    if (req.url === '/') {
         html = `
             <html>
                 <head>
@@ -13,8 +12,8 @@ const servidor = createServer(function (req, resp) {
                     <h1> Casa do Código </h1>
                 </body>
             </html>
-        `;
-    } else if (req.url == '/livros') {
+        `
+    } else if (req.url === '/livros') {
         html = `
             <html>
                 <head>
@@ -24,11 +23,11 @@ const servidor = createServer(function (req, resp) {
                     <h1> Listagem de livros </h1>
                 </body>
             </html>
-        `;
+        `
     }
 
     // outros else-if
 
-    resp.end(html);
-});
-servidor.listen(3000);
+    resp.end(html)
+})
+servidor.listen(3000)
