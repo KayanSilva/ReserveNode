@@ -6,6 +6,8 @@ const app = express()
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 
+const templates = require('../app/views/templates')
+
 app.use('/estatico', express.static('src/app/public'))
 
 app.use(bodyParser.urlencoded({
@@ -20,7 +22,22 @@ app.use(methodOverride(function (req, res) {
   }
 }))
 
-const routes = require('../app/routes/routes.js')
-routes(app)
+const sessaoAutenticacao = require('./sessao-autenticacao')
+sessaoAutenticacao(app)
+
+const rotas = require('../app/routes/routes')
+rotas(app)
+
+app.use(function (req, resp, next) {
+  return resp.status(404).marko(
+    templates.base.erro404
+  )
+})
+
+app.use(function (erro, req, resp, next) {
+  return resp.status(500).marko(
+    templates.base.erro500
+  )
+})
 
 module.exports = app

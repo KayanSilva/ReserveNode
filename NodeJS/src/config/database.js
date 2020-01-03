@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
 )
 `
 
-const INSERIR_USUARIO_1 = `
+const INSERIR_USUARIO_1 =
+  `
 INSERT INTO usuarios (
     nome_completo, 
     email,
@@ -18,16 +19,19 @@ INSERT INTO usuarios (
 ) SELECT 'Gabriel Leite', 'gabriel@alura.com.br', '123' WHERE NOT EXISTS (SELECT * FROM usuarios WHERE email = 'gabriel@alura.com.br')
 `
 
-const LIVROS_SCHEMA = `
+const LIVROS_SCHEMA =
+  `
 CREATE TABLE IF NOT EXISTS livros (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     titulo TEXT NOT NULL, 
     preco REAL NOT NULL,
-    descricao TEXT DEFAULT ('') NOT NULL
+    descricao TEXT DEFAULT ('') NOT NULL, 
+    url_capa TEXT
 )
 `
 
-const INSERIR_LIVRO_1 = `
+const INSERIR_LIVRO_1 =
+  `
 INSERT INTO livros (
     titulo,
     preco,
@@ -35,7 +39,8 @@ INSERT INTO livros (
 ) SELECT 'Node na prática', 30.0, 'Como desenvolver com Node.' WHERE NOT EXISTS (SELECT * FROM livros WHERE titulo = 'Node na prática')
 `
 
-const INSERIR_LIVRO_2 = `
+const INSERIR_LIVRO_2 =
+  `
 INSERT INTO livros (
     titulo, 
     preco,
@@ -50,7 +55,8 @@ bd.serialize(() => {
   bd.run(LIVROS_SCHEMA)
   bd.run(INSERIR_LIVRO_1)
   bd.run(INSERIR_LIVRO_2)
-  bd.each('SELECT * FROM usuarios', (_err, usuario) => {
+
+  bd.each('SELECT * FROM usuarios', (usuario) => {
     console.log('Usuario: ')
     console.log(usuario)
   })
